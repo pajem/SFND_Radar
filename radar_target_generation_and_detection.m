@@ -167,7 +167,6 @@ offset = 15;
 % Use RDM[x,y] as the matrix from the output of 2D FFT for implementing
 % CFAR
 signal_cfar = zeros(size(RDM));
-threshold_cfar = zeros(size(RDM));
 
 % calculate window size
 window_range_size = (2 * Tr) + (2 * Gr) + 1;
