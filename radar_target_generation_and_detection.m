@@ -31,7 +31,7 @@ V_target = 10;
 % chirp using the requirements above.
 B_sweep = c / (2 * R_res); % Sweep Bandwidth
 Tchirp = (2 * (R_max / c)) * 5.5; % Chirp Time is typically 5~6 times the roundtrip time
-Slope_sweep = B_sweep / Tchirp % Sweep Slope
+Slope_sweep = B_sweep / Tchirp; % Sweep Slope
 
 %Operating carrier frequency of Radar 
 fc= 77e9;             %carrier freq
@@ -77,38 +77,36 @@ for i=1:length(t)
     %Now by mixing the Transmit and Receive generate the beat signal
     %This is done by element wise matrix multiplication of Transmit and
     %Receiver Signal
-    Mix(i) = Tx(i) * Rx(i);
+    Mix(i) = Tx(i) .* Rx(i);
 end
+
 
 %% RANGE MEASUREMENT
 
-
- % *%TODO* :
 %reshape the vector into Nr*Nd array. Nr and Nd here would also define the size of
 %Range and Doppler FFT respectively.
 
- % *%TODO* :
 %run the FFT on the beat signal along the range bins dimension (Nr) and
 %normalize.
+signal_fft = fft(Mix, Nr);
+signal_fft = signal_fft / Nr;
 
- % *%TODO* :
 % Take the absolute value of FFT output
+signal_fft = abs(signal_fft);
 
- % *%TODO* :
 % Output of FFT is double sided signal, but we are interested in only one side of the spectrum.
 % Hence we throw out half of the samples.
-
+signal_fft = signal_fft(1:Nr/2);
 
 %plotting the range
 figure ('Name','Range from First FFT')
-subplot(2,1,1)
+%subplot(2,1,1)
 
- % *%TODO* :
- % plot FFT output 
-
+% plot FFT output
+plot(signal_fft) 
+xlabel('range')
  
 axis ([0 200 0 1]);
-
 
 
 %% RANGE DOPPLER RESPONSE
