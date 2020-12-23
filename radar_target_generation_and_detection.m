@@ -152,7 +152,7 @@ Gr = 4;
 Gd = 4;
 
 % offset the threshold by SNR value in dB
-offset = 6;
+offset = 15;
 
 %design a loop such that it slides the CUT across range doppler map by
 %giving margins at the edges for Training and Guard Cells.
