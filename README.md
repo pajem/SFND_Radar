@@ -23,3 +23,7 @@ The plots below shows the Range FFT and the Range Doppler Map (RDM) with the ini
 ### Range Doppler Map
 
 ![range doppler map](images/sfnd_radar_doppler.jpg)
+
+## 2D CFAR
+
+See code from line 141 of `radar_target_generation.m`.
