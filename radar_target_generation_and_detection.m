@@ -10,11 +10,12 @@ clc;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %speed of light = 3e8
+c = 3e8
 %% User Defined Range and Velocity of target
-% *%TODO* :
 % define the target's initial position and velocity. Note : Velocity
 % remains contant
- 
+D_target = 100
+V_target = 5
 
 
 %% FMCW Waveform Generation
