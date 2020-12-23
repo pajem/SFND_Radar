@@ -30,8 +30,8 @@ V_target = 10;
 % Calculate the Bandwidth (B), Chirp Time (Tchirp) and Slope (slope) of the FMCW
 % chirp using the requirements above.
 B_sweep = c / (2 * R_res); % Sweep Bandwidth
-T_chirp = (2 * (R_max / c)) * 5.5; % Chirp Time is typically 5~6 times the roundtrip time
-Slope_sweep = B_sweep / T_chirp % Sweep Slope
+Tchirp = (2 * (R_max / c)) * 5.5; % Chirp Time is typically 5~6 times the roundtrip time
+Slope_sweep = B_sweep / Tchirp % Sweep Slope
 
 %Operating carrier frequency of Radar 
 fc= 77e9;             %carrier freq
@@ -63,23 +63,21 @@ td=zeros(1,length(t));
 % Running the radar scenario over the time. 
 
 for i=1:length(t)         
+    %For each time stamp update the Range of the Target for constant velocity.
+    r_t(i) = R_target + (V_target * t(i));
     
-    
-    % *%TODO* :
-    %For each time stamp update the Range of the Target for constant velocity. 
-    
-    % *%TODO* :
     %For each time sample we need update the transmitted and
     %received signal. 
-    Tx(i) = 0
-    Rx (i)  = 0
+    td(i) = 2 * r_t(i) / c; % signal trip time
+    t_tx = t(i);
+    t_rx = t(i) - td(i);
+    Tx(i) = cos(2 * pi * (fc * t_tx + Slope_sweep * t_tx^2 / 2));
+    Rx(i) = cos(2 * pi * (fc * t_rx + Slope_sweep * t_rx^2 / 2));
     
-    % *%TODO* :
     %Now by mixing the Transmit and Receive generate the beat signal
     %This is done by element wise matrix multiplication of Transmit and
     %Receiver Signal
-    Mix(i) = 0
-    
+    Mix(i) = Tx(i) * Rx(i);
 end
 
 %% RANGE MEASUREMENT
